@@ -1,0 +1,150 @@
+<script src="socket.io/socket.io.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+<script type="text/javascript">
+    var url = document.URL;
+    var urlParts = url.split("?")
+    var room = urlParts[1];
+    var userName = urlParts[2];
+    var role = urlParts[3];
+    var userID = urlParts[4];
+    var avatar = urlParts[5] + '?' + urlParts[6];
+
+    //alert(url);
+    var Socket = io.connect();
+
+    // on connection to server, ask for user's name with an anonymous callback
+    Socket.on('connect', function () {
+        // call the server-side function 'adduser' and send one parameter (value of prompt)
+        if (room == 'logRoom') {
+            Socket.emit('getFile', 'Room2_2015-0-17.txt', userName);
+        }
+        else {
+            Socket.emit('adduser', userName, room);
+        }
+    });
+
+    // listener, whenever the server emits 'updatechat', this updates the chat body
+    Socket.on('updatechatIntro', function (username, data, id, history) {
+        for (var i = 0; i < history.length; i++) {
+            var parts = history[i].split(";");
+            $('#conversation').append(parts[1] + parts[2]);
+        }
+        $('#conversation').append('<div class="chat">' + '<b>' + username + ':</b> ' + data + '  </div>');
+        var objDiv = document.getElementById("convPane");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    });
+
+    // listener, whenever the server emits 'updatechat', this updates the chat body
+    Socket.on('updatechat', function (username, data, id, mUserID) {
+        //var x = getImage(mUserID);
+        //alert(data);
+        $('#conversation').append(data);
+        if (role == 1 && username != "SERVER") {
+            $('#conversation').append('<div class="admin"> <input type="button" class =  d' + id + ' onclick="myFunction(' + id + ')"value="delete" /> <input type="button" class =  d' + id + ' onclick=banUser("' + username + '") value="Ban" /> </div>');
+        }
+        var objDiv = document.getElementById("convPane");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    });
+
+    Socket.on('updateDelete', function (username, data, test, id) {
+        var x = document.getElementById(data);
+        x.parentNode.removeChild(x);
+        var buttons = document.getElementsByClassName('d' + data);
+        buttons[1].parentNode.removeChild(buttons[1]);
+        buttons[0].parentNode.removeChild(buttons[0]);
+
+    });
+
+    Socket.on('banned', function (username, userToBan, test, id) {
+
+        if (userName == userToBan) {
+            //alert("BANNEDHAMMER");
+            window.location.assign("www.google.com");
+            //var frame = window.parent.document.getElementById('chatFrame');
+            //frame.setAttribute("src", "blank")
+        }
+    });
+
+    Socket.on('returnFile', function (data, user_Name) {
+        alert(userName + ';' + user_Name)
+        if (userName == user_Name) {
+            $('#conversation').append(data);
+        }
+    });
+
+    // on load of page
+    $(function () {
+        // when the client clicks SEND
+        $('#datasend').click(function () {
+            var message = $('#data').val();
+            $('#data').val('');
+            // tell server to execute 'sendchat' and send along one parameter
+            Socket.emit('sendchat', message, userID, avatar);
+        });
+        $('#datadelete').click(function () {
+            var message = $('#toDelete').val();
+            $('#data').val('');
+            // tell server to execute 'sendchat' and send along one parameter
+            Socket.emit('deleteMessage', 1, message);
+        });
+
+        // when the client hits ENTER on their keyboard
+        $('#data').keypress(function (e) {
+            if (e.which == 13) {
+                var message = $('#data').val();
+                $('#data').val('');
+                // tell server to execute 'sendchat' and send along one parameter
+                Socket.emit('sendchat', message, userID, avatar);
+            }
+        });
+    });
+
+</script>
+<script>
+    function myFunction(id) {
+        Socket.emit('deleteMessage', 1, id);
+ 
+    }
+</script>
+<script>
+    function banUser(user) {
+        var hold;
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                hold = xmlhttp.responseText;
+            }
+        }
+        //direct to the helper php functions I created
+        xmlhttp.open("GET", "SVMhelper.php?q="+user, true);
+        xmlhttp.send();
+        Socket.emit('banUser', 1, user);
+    }
+</script>
+<script>
+    function getImage(userid) {
+        var hold;
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                hold = xmlhttp.responseText;
+                //window.alert(hold)
+            }
+        }
+        //direct to the helper php functions I created
+        xmlhttp.open("GET", "SVMhelper.php?i=" + userid, false);
+        xmlhttp.send();
+        hold = xmlhttp.responseText;
+        return hold.toString();
+    }
+</script>
+
+<!--<div style="float:left;width:500px;border-right:1px solid black;height:300px;padding:10px;overflow:scroll;">
+	<b>ROOMS</b>
+	<div id="rooms"></div>
+</div>-->
+<div id="convPane" style="float:left;width:600px;height:600px;overflow-y:scroll;padding:10px;">
+	<div id="conversation"></div>
+</div>
+	<input type="text" id="data" style="width:200px;"/>
+    <input type="button" id="datasend" value="send" />   

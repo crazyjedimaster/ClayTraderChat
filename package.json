@@ -1,0 +1,16 @@
+{
+  "name": "claytrader_chat",
+  "version": "0.0.1-14",
+  "description": "example chat application with socket.io",
+  "dependencies": {
+    "express": "2.4.6",
+    "socket.io": "0.8.4"
+  },
+  "subdomain": "claytrader",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": "0.10.X"
+  }
+}
