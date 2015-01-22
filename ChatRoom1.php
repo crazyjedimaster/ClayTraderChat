@@ -2,15 +2,15 @@
     require_once("../../../wp-load.php");
 
       $current_user = wp_get_current_user();
-      $userName = $current_user->user_login;
+      $userName = $current_user->display_name;
       $userID = $current_user->ID; 
       $role = current_user_can("delete_posts")== 1? 1 : 0; 
-      $avatar = get_avatar($userid,24);
-      $row = $wpdb->get_row("SELECT * FROM user_chat_ban WHERE userName = 'steven'", ARRAY_N);     
+      $avatar = get_avatar($userID,24);
+      $row = $wpdb->get_row("SELECT * FROM user_chat_ban WHERE userName = "+ $userName, ARRAY_N);     
 
 ?>
 
-<?php if ($row[1] == 1) {  ?>
+<?php if (!is_user_logged_in() || $row[1] == 1) {  ?>
 <div>ERROR</div>
 <?php }else{ ?>
 <html lang="en">

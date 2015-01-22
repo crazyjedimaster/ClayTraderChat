@@ -1,6 +1,6 @@
 {
   "name": "claytrader_chat",
-  "version": "0.0.1-14",
+  "version": "0.0.1-15",
   "description": "example chat application with socket.io",
   "dependencies": {
     "express": "2.4.6",

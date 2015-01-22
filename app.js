@@ -51,15 +51,15 @@ io.sockets.on('connection', function (socket) {
         // echo to client they've connected
         if (room == "room1") {
             
-            socket.emit('updatechatIntro', 'SERVER', 'you have connected to ' + room, 0, mesHisRoom1);
+            socket.emit('updatechatIntro', 0, mesHisRoom1);
         }
         else if (room == "room2") {
             //var chatHistory = fs.readFileSync(fileNameRoom2);
             //console.log("SUPER CUSTOMER STUFF  " + chatHistory);
-            socket.emit('updatechatIntro', 'SERVER', 'you have connected to ' + room, 0, mesHisRoom2);
+            socket.emit('updatechatIntro', 0, mesHisRoom2);
         }
         // echo to room 1 that a person has connected to their room
-        socket.broadcast.to('room1').emit('updatechat', 'SERVER', username + ' has connected to this room', 0);
+        //socket.broadcast.to('room1').emit('updatechat', 'SERVER', username + ' has connected to this room', 0);
         //socket.emit('updaterooms', rooms, room);
     });
 

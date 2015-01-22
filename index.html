@@ -24,21 +24,21 @@
     });
 
     // listener, whenever the server emits 'updatechat', this updates the chat body
-    Socket.on('updatechatIntro', function (username, data, id, history) {
+    Socket.on('updatechatIntro', function (id, history) {
         for (var i = 0; i < history.length; i++) {
             var parts = history[i].split(";");
             $('#conversation').append(parts[1] + parts[2]);
         }
-        $('#conversation').append('<div class="chat">' + '<b>' + username + ':</b> ' + data + '  </div>');
         var objDiv = document.getElementById("convPane");
         objDiv.scrollTop = objDiv.scrollHeight;
     });
 
     // listener, whenever the server emits 'updatechat', this updates the chat body
     Socket.on('updatechat', function (username, data, id, mUserID) {
-        //var x = getImage(mUserID);
-        //alert(data);
-        $('#conversation').append(data);
+
+        if (username != "SERVER") {
+            $('#conversation').append(data);
+        }
         if (role == 1 && username != "SERVER") {
             $('#conversation').append('<div class="admin"> <input type="button" class =  d' + id + ' onclick="myFunction(' + id + ')"value="delete" /> <input type="button" class =  d' + id + ' onclick=banUser("' + username + '") value="Ban" /> </div>');
         }
