@@ -67,6 +67,7 @@ io.sockets.on('connection', function (socket) {
     socket.on('sendchat', function (data, mUserID, avatar) {
         console.log('CUSTOM LOG - In sendChat');
         var toSend = '<div class="chat" id = ' + id + '>' + avatar + '<b>' + socket.username + ':</b> ' + data + '  </div>'
+        var toSend = '<div class="chat" id = ' + id + '>' + '<div class="avatar">' + avatar + '</div>' + '<div class="user">' + socket.username + '</div>' + '<div class="message">' + data + '</div>  </div>'
         if (today != date()) {
             //today(date)
             fileNameRoom1 = "Room1_" + date() + ".txt";
