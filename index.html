@@ -7,7 +7,11 @@
     var userName = urlParts[2];
     var role = urlParts[3];
     var userID = urlParts[4];
-    var avatar = urlParts[5] + '?' + urlParts[6];
+    var avatar = urlParts[5]
+
+    for (var i = 6; i < urlParts.length; i++) {
+        avatar += '?' + urlParts[i];
+    }
 
     //alert(url);
     var Socket = io.connect();
@@ -16,9 +20,11 @@
     Socket.on('connect', function () {
         // call the server-side function 'adduser' and send one parameter (value of prompt)
         if (room == 'logRoom') {
-            Socket.emit('getFile', 'Room2_2015-0-17.txt', userName);
+            document.getElementById("chat").style.display = 'none';
+            Socket.emit('getFile', urlParts[2], userName);
         }
         else {
+            document.getElementById("history").style.display = 'none';
             Socket.emit('adduser', userName, room);
         }
     });
@@ -66,9 +72,9 @@
     });
 
     Socket.on('returnFile', function (data, user_Name) {
-        alert(userName + ';' + user_Name)
+        //alert(userName + ';' + user_Name)
         if (userName == user_Name) {
-            $('#conversation').append(data);
+            $('#displayHistory').append(data);
         }
     });
 
@@ -139,12 +145,15 @@
     }
 </script>
 
-<!--<div style="float:left;width:500px;border-right:1px solid black;height:300px;padding:10px;overflow:scroll;">
-	<b>ROOMS</b>
-	<div id="rooms"></div>
-</div>-->
-<div id="convPane" style="float:left;width:600px;height:600px;overflow-y:scroll;padding:10px;">
-	<div id="conversation"></div>
-</div>
+<div id="chat">
+    <div id="convPane" style="float:left;width:600px;height:600px;overflow-y:scroll;padding:10px;">
+	    <div id="conversation"></div>
+    </div>
 	<input type="text" id="data" style="width:200px;"/>
     <input type="button" id="datasend" value="send" />   
+</div>
+<div id="history">
+    <div id="convPane" style="float:left;width:600px;height:600px;overflow-y:scroll;padding:10px;">
+	    <div id="displayHistory"></div>
+    </div>
+</div>

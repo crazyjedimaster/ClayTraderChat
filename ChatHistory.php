@@ -7,6 +7,11 @@
       $role = current_user_can("delete_posts")== 1? 1 : 0; 
       $avatar = get_avatar($userid,24);
       $row = $wpdb->get_row("SELECT * FROM user_chat_ban WHERE userName = 'steven'", ARRAY_N);     
+
+      //get file name from path
+      $file = $_SERVER['REQUEST_URI'];
+      $file2 = explode("?r=",$file)[1];
+      $file2 = $file2 . ".txt";
 ?>
 
 <?php if ($row[1] == 1) {  ?>
@@ -19,7 +24,7 @@
     </head>
     <body>
         <div>
-            <iframe src="http://localhost:8080/?logRoom?<?php echo $userName; ?>?<?php echo $role?>?<?php echo $userID?>?<?php echo $avatar?>" id="chatFrame" height=700px width=700px frameborder="0" name="targetframe"></iframe>
+            <iframe src="http://localhost:8080/?logRoom?<?php echo $file2?>" id="chatFrame" height=700px width=700px frameborder="0" name="targetframe"></iframe>
         </div>
     </body>
 </html>
@@ -50,5 +55,3 @@
     } 
 
 </script>
-
-<

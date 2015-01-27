@@ -19,6 +19,10 @@ function date() {
     return d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate();
 };
 
+function time() {
+    return (d.getHours() % 12) + ":" + d.getMinutes() + ":" + d.getSeconds();
+}
+
 
 
 
@@ -65,9 +69,7 @@ io.sockets.on('connection', function (socket) {
 
     // when the client emits 'sendchat', this listens and executes
     socket.on('sendchat', function (data, mUserID, avatar) {
-        console.log('CUSTOM LOG - In sendChat');
-        var toSend = '<div class="chat" id = ' + id + '>' + avatar + '<b>' + socket.username + ':</b> ' + data + '  </div>'
-        var toSend = '<div class="chat" id = ' + id + '>' + '<div class="avatar">' + avatar + '</div>' + '<div class="user">' + socket.username + '</div>' + '<div class="message">' + data + '</div>  </div>'
+        var toSend = '<div class="chat" id = ' + id + '>' + '<div class="avatar">' + avatar + '</div>' + '<div class="user">' + socket.username + '</div>' + '<div class="message">' + data + '</div>  </div>';  
         if (today != date()) {
             //today(date)
             fileNameRoom1 = "Room1_" + date() + ".txt";
@@ -123,7 +125,13 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('getFile', function (fileName, tempUser) {
-        var fileContent = fs.readFileSync(fileName);
+        var fileContent;
+        try {
+            fileContent = fs.readFileSync(fileName);
+        }catch(e){
+            fileContent = "NO SUCH FILE EXISTS!!"
+        }
+
         //socket.emit('returnFile', fileContent.toString());
 
         io.sockets. in (socket.room).emit('returnFile', fileContent.toString(), tempUser);

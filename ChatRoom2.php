@@ -6,6 +6,7 @@
       $userID = $current_user->ID; 
       $role = current_user_can("delete_posts")== 1? 1 : 0; 
       $avatar = get_avatar($userID,24);
+      echo $avatar;
       $row = $wpdb->get_row("SELECT * FROM user_chat_ban WHERE userName = " + $userName, ARRAY_N);     
 ?>
 
