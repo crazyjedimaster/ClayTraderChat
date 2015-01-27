@@ -1,0 +1,7 @@
+#chat .chat {}
+#chat .chat .avatar {display: inline-block;}
+#chat .chat .message {display: inline-block;}
+#chat .chat .message .user {display: inline-block;}
+#chat .chat .message .user {display: inline-block;}
+#chat .chat .message .message {display: inline-block;}
+#chat .chat .message .admin {display: none;}
