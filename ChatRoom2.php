@@ -6,7 +6,6 @@
       $userID = $current_user->ID; 
       $role = current_user_can("delete_posts")== 1? 1 : 0; 
       $avatar = get_avatar($userID,24);
-      echo $avatar;
       $row = $wpdb->get_row("SELECT * FROM user_chat_ban WHERE userName = " + $userName, ARRAY_N);     
 ?>
 
@@ -20,7 +19,7 @@
     </head>
     <body>
         <div>
-            <iframe src="http://claytrader.jit.su/?room2?<?php echo $userName; ?>?<?php echo $role?>?<?php echo $userID?>?<?php echo $avatar?>" id="chatFrame" height=700px width=700px frameborder="0" name="targetframe"></iframe>
+            <iframe src="http://localhost:8080/?room2?<?php echo $userName; ?>?<?php echo $role?>?<?php echo $userID?>?<?php echo $avatar?>" id="chatFrame" height=700px width=700px frameborder="0" name="targetframe"></iframe>
         </div>
     </body>
 </html>

@@ -2,6 +2,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 <script type="text/javascript">
     var url = document.URL;
+    url = decodeURIComponent(url);
     var urlParts = url.split("?")
     var room = urlParts[1];
     var userName = urlParts[2];
@@ -13,7 +14,6 @@
         avatar += '?' + urlParts[i];
     }
 
-    //alert(url);
     var Socket = io.connect();
 
     // on connection to server, ask for user's name with an anonymous callback
