@@ -9,8 +9,8 @@
     var userName = urlParts[2];
     var role = urlParts[3];
     var userID = urlParts[4];
-    var avatar = urlParts[5]
-
+    var avatar = urlParts[5];
+    var muted = false;
     for (var i = 6; i < urlParts.length; i++) {
         avatar += '?' + urlParts[i];
     }
@@ -49,7 +49,12 @@
         if (role == 1 && username != "SERVER") {
             $('#conversation').append('<div class="admin"> <input type="button" class =  d' + id + ' onclick="myFunction(' + id + ')"value="delete" /> <input type="button" class =  d' + id + ' onclick=banUser("' + username + '") value="Ban" /> </div>');
         }
-        var objDiv = document.getElementById("convPane");
+        var mute = document.getElementById('mute');
+        if (!mute.checked) {
+            var audio = document.getElementById('sound');
+            audio.play();
+        }
+        var objDiv = document.getElementById("conversation");
         objDiv.scrollTop = objDiv.scrollHeight;
     });
 
@@ -84,6 +89,24 @@
         // when the client clicks SEND
         $('#datasend').click(function () {
             var message = $('#data').val();
+            //strips tags
+            message = $("<div/>").html(message).text();
+
+            var mParts = message.split("[link]");
+            if (mParts.length > 1) {
+                message = "";
+                for (var i = 0; i < mParts.length; i++) {
+                    //alert(mParts[i]);
+                    var fParts = mParts[i].split("[/link]");
+                    //alert(fparts[0]);
+                    var lPart = fParts[0].link(fParts[0]);
+                    //alert(lParts);
+                    message += mParts[i] + lPart + fParts[1];
+                    //alert(message);
+                }
+            }
+
+            //message = message.link(message);
             $('#data').val('');
             // tell server to execute 'sendchat' and send along one parameter
             Socket.emit('sendchat', message, userID, avatar);
@@ -99,6 +122,17 @@
         $('#data').keypress(function (e) {
             if (e.which == 13) {
                 var message = $('#data').val();
+                //strips tags
+                message = $("<div/>").html(message).text();
+                var mParts = message.split("[link]");
+                if (mParts.length > 1) {
+                    message = mParts[0];
+                    for (var i = 1; i < mParts.length; i++) {
+                        var fParts = mParts[i].split("[/link]");
+                        var lPart = fParts[0].link(fParts[0]);
+                        message += lPart + fParts[1];
+                    }
+                }
                 $('#data').val('');
                 // tell server to execute 'sendchat' and send along one parameter
                 Socket.emit('sendchat', message, userID, avatar);
@@ -146,16 +180,29 @@
     }
 </script>
 
+
+
+
+<!DOCTYPE html>
+<html>
+<body>
+<audio id="sound">
+  <source src="http://localhost:44129/wp-content/themes/ClayTrader/Blop.mp3"/>
+  Your browser does not support the audio element.
+</audio>
 <div id="chat">
     <div id="convPane">
 	    <div id="conversation"></div>
     </div>
-<!--	<input type="text" id="data"/> -->
     <textarea id="data"></textarea>
-    <input type="button" id="datasend" value="send" />   
+    <input type="button" id="datasend" value="send" />
+    <label for="mute">Muted?</label>
+    <input type="checkbox" name="mute" id="mute" value="mute" >
 </div>
 <div id="history">
     <div id="convPane">
 	    <div id="displayHistory"></div>
     </div>
 </div>
+</body>
+</html>
