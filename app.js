@@ -114,12 +114,12 @@ io.sockets.on('connection', function (socket) {
         if (socket.room == "room1") {
             mesHisRoom1.shift();
             mesHisRoom1.push(mUserID + ';<div class="chat" id = ' + id + '>;<b>' + socket.username + ':</b> ' + data + '  </div>');
-            streamRoom1.write("<div id=" + id + " class=Message>" + socket.username + ":" + data + " @ " + time() + "</div>\n");
+            streamRoom1.write("<div id=" + id + " class=Message>" + socket.username + ":" + data + " @ " + time().toString() + "</div>\n");
         }
         else {
             mesHisRoom2.shift();
             mesHisRoom2.push(mUserID + ';<div class="chat" id = ' + id + '>;<b>' + socket.username + ':</b> ' + data + '  </div>');
-            streamRoom2.write("<div id=" + id + " class=Message>" + socket.username + ":" + data + " @ " + time() + "</div>\n");
+            streamRoom2.write("<div id=" + id + " class=Message>" + socket.username + ":" + data + " @ " + time().toString() + "</div>\n");
         }
         io.sockets. in (socket.room).emit('updatechat', socket.username, toSend, id++, mUserID);
 
@@ -130,10 +130,10 @@ io.sockets.on('connection', function (socket) {
         // stream.end();
         // we tell the client to execute 'updatechat' with 2 parameters
         if (socket.room == "room1") {
-            streamRoom1.write("<div data-id=" + data + " class=Deleted" + " data-Time=" + time() + "></div>\n");
+            streamRoom1.write("<div data-id=" + data + " class=Deleted" + " data-Time=" + time().toString() + "></div>\n");
         }
         else {
-            streamRoom2.write("<div data-id=" + data + " class=Deleted" + " data-Time=" + time() + "></div>\n");
+            streamRoom2.write("<div data-id=" + data + " class=Deleted" + " data-Time=" + time().toString() + "></div>\n");
         }
         io.sockets. in (socket.room).emit('updateDelete', socket.username, data, test, id++);
     });
