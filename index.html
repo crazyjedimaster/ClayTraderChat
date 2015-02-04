@@ -1,6 +1,7 @@
 <script src="socket.io/socket.io.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 <link href="http://claytrader.com/int/chat.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://localhost:40097/wp-content/themes/ClayTrader/spin.js"></script>
 <script type="text/javascript">
     var url = document.URL;
     url = decodeURIComponent(url);
@@ -11,12 +12,16 @@
     var userID = urlParts[4];
     var avatar = urlParts[5];
     var muted = false;
+    var animation = new Spinner().spin();
+
     for (var i = 6; i < urlParts.length; i++) {
         avatar += '?' + urlParts[i];
     }
 
-    var Socket = io.connect();
 
+    var Socket = io.connect();
+    //var target = document.getElementById("chat");
+    //target.appendChild(animation.el);
     // on connection to server, ask for user's name with an anonymous callback
     Socket.on('connect', function () {
         // call the server-side function 'adduser' and send one parameter (value of prompt)
@@ -32,6 +37,9 @@
 
     // listener, whenever the server emits 'updatechat', this updates the chat body
     Socket.on('updatechatIntro', function (id, history) {
+        var target = document.getElementById('chat');
+        var child = target.lastChild;
+        target.removeChild(child);
         for (var i = 0; i < history.length; i++) {
             var parts = history[i].split(";");
             $('#conversation').append(parts[1] + parts[2]);
@@ -183,6 +191,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html>
 <body>
@@ -206,3 +215,8 @@
 </div>
 </body>
 </html>
+<script>
+var target = document.getElementById('chat');
+var spinner = new Spinner().spin();
+target.appendChild(spinner.el);
+</script>

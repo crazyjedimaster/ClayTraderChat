@@ -7,6 +7,10 @@ app.listen(8080);
 var today = date();
 var mesHisRoom1 = ["","","","","","","","","",""];
 var mesHisRoom2 = ["","","","","","","","","",""];
+var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Decr" ];
+var MS_PER_HOUR = 3600000;
+var TIME_OFFSET = 0;
 
 var streamOptions = { flags: 'a+'};
 var fileNameRoom1 = "Room1_" + date() +".txt"
@@ -16,7 +20,9 @@ var streamRoom2 = fs.createWriteStream(fileNameRoom2,streamOptions);
 
 
 function date() {
-    var d = new Date();
+    var now = new Date();
+    var d = new Date(now - (TIME_OFFSET * MS_PER_HOUR));
+
     var year = d.getFullYear();
     var month = d.getMonth() + 1;
     if (month < 10) 
@@ -32,8 +38,11 @@ function date() {
 };
 
 function time() {
-    var d = new Date();
-    var hours = d.getHours() % 12;
+    var now = new Date();
+    var d = new Date(now - (TIME_OFFSET * MS_PER_HOUR));
+
+
+    var hours = (d.getHours() - 6) % 12;
     if (hours < 10) 
     {
         hours = "0" + hours;
@@ -54,7 +63,15 @@ function time() {
     return (hours + ":" + minutes + ":" + seconds);
 }
 
+function shortDate() {
+     var now = new Date();
+    var d = new Date(now - (TIME_OFFSET * MS_PER_HOUR));
 
+    var month = monthNames[d.getMonth()];
+    var day = d.getDate();
+
+    return month + ' ' + day;
+}
 
 
 // routing
@@ -100,9 +117,8 @@ io.sockets.on('connection', function (socket) {
 
     // when the client emits 'sendchat', this listens and executes
     socket.on('sendchat', function (data, mUserID, avatar) {
-        var toSend = '<div class="chat group" id = ' + id + '>' + '<div class="avatar">' + avatar + '</div>' + '<div class="content"><div class="user">' + socket.username + '</div>' + '<div class="message">' + data + '</div> <div class="time">' + time().toString() + '</div> </div> </div>';  
+        var toSend = '<div class="chat group" id = ' + id + '>' + '<div class="avatar">' + avatar + '</div>' + '<div class="content"><div class="user">' + socket.username + '  ' + shortDate().toString() + ' ' + time().toString() + '</div> <div class="message">' + data + '</div> </div> </div>';  
         if (today != date()) {
-            //today(date)
             fileNameRoom1 = "Room1_" + date() + ".txt";
             fileNameRoom2 = "Room2_" + date() + ".txt";
             streamRoom1.end();
@@ -125,9 +141,6 @@ io.sockets.on('connection', function (socket) {
 
     });
     socket.on('deleteMessage', function (test, data) {
-        console.log('CUSTOM LOG - In delete message');
-        // adjust recordingstream.write(id +" " + socket.username + ":" + data + " @ " + date.getTime() + "\n");
-        // stream.end();
         // we tell the client to execute 'updatechat' with 2 parameters
         if (socket.room == "room1") {
             streamRoom1.write("<div data-id=" + data + " class=Deleted" + " data-Time=" + time().toString() + "></div>\n");
