@@ -3,14 +3,10 @@ var io = require('socket.io').listen(app);
 var fs = require('fs');
 
 app.listen(8080);
-//var d = new Date();
+var d = new Date();
 var today = date();
 var mesHisRoom1 = ["","","","","","","","","",""];
 var mesHisRoom2 = ["","","","","","","","","",""];
-var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Decr" ];
-var MS_PER_HOUR = 3600000;
-var TIME_OFFSET = 0;
 
 var streamOptions = { flags: 'a+'};
 var fileNameRoom1 = "Room1_" + date() +".txt"
@@ -20,58 +16,14 @@ var streamRoom2 = fs.createWriteStream(fileNameRoom2,streamOptions);
 
 
 function date() {
-    var now = new Date();
-    var d = new Date(now - (TIME_OFFSET * MS_PER_HOUR));
-
-    var year = d.getFullYear();
-    var month = d.getMonth() + 1;
-    if (month < 10) 
-    {
-        month = "0" + month;
-    }
-    var day = d.getDate();
-    if (day < 10) 
-    {
-        day = "0" + day;
-    }
-    return year + "-" + month + "-" + day;
+    return d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate();
 };
 
 function time() {
-    var now = new Date();
-    var d = new Date(now - (TIME_OFFSET * MS_PER_HOUR));
-
-
-    var hours = (d.getHours() - 6) % 12;
-    if (hours < 10) 
-    {
-        hours = "0" + hours;
-    }
-
-    var minutes = d.getMinutes();
-    if (minutes < 10) 
-    {
-        minutes = "0" + minutes;
-    }
-
-    var seconds = d.getSeconds();
-    if (seconds < 10) 
-    {
-        seconds = "0" + seconds;
-    }
-
-    return (hours + ":" + minutes + ":" + seconds);
+    return (d.getHours() % 12) + ":" + d.getMinutes() + ":" + d.getSeconds();
 }
 
-function shortDate() {
-     var now = new Date();
-    var d = new Date(now - (TIME_OFFSET * MS_PER_HOUR));
 
-    var month = monthNames[d.getMonth()];
-    var day = d.getDate();
-
-    return month + ' ' + day;
-}
 
 
 // routing
@@ -117,8 +69,9 @@ io.sockets.on('connection', function (socket) {
 
     // when the client emits 'sendchat', this listens and executes
     socket.on('sendchat', function (data, mUserID, avatar) {
-        var toSend = '<div class="chat group" id = ' + id + '>' + '<div class="avatar">' + avatar + '</div>' + '<div class="content"><div class="user">' + socket.username + '  ' + shortDate().toString() + ' ' + time().toString() + '</div> <div class="message">' + data + '</div> </div> </div>';  
+        var toSend = '<div class="chat group" id = ' + id + '>' + '<div class="avatar">' + avatar + '</div>' + '<div class="content"><div class="user">' + socket.username + '- </div>' + '<div class="message">' + data + '</div> <div class="time">' + time().toString() + '</div> </div> </div>';  
         if (today != date()) {
+            //today(date)
             fileNameRoom1 = "Room1_" + date() + ".txt";
             fileNameRoom2 = "Room2_" + date() + ".txt";
             streamRoom1.end();
@@ -130,23 +83,26 @@ io.sockets.on('connection', function (socket) {
         if (socket.room == "room1") {
             mesHisRoom1.shift();
             mesHisRoom1.push(mUserID + ';<div class="chat" id = ' + id + '>;<b>' + socket.username + ':</b> ' + data + '  </div>');
-            streamRoom1.write("<div id=" + id + " class=Message>" + socket.username + ":" + data + " @ " + time().toString() + "</div>\n");
+            streamRoom1.write("<div id=" + id + " class=Message>" + socket.username + ":" + data + " @ " + d.getTime() + "</div>\n");
         }
         else {
             mesHisRoom2.shift();
             mesHisRoom2.push(mUserID + ';<div class="chat" id = ' + id + '>;<b>' + socket.username + ':</b> ' + data + '  </div>');
-            streamRoom2.write("<div id=" + id + " class=Message>" + socket.username + ":" + data + " @ " + time().toString() + "</div>\n");
+            streamRoom2.write("<div id=" + id + " class=Message>" + socket.username + ":" + data + " @ " + d.getTime() + "</div>\n");
         }
         io.sockets. in (socket.room).emit('updatechat', socket.username, toSend, id++, mUserID);
 
     });
     socket.on('deleteMessage', function (test, data) {
+        console.log('CUSTOM LOG - In delete message');
+        // adjust recordingstream.write(id +" " + socket.username + ":" + data + " @ " + date.getTime() + "\n");
+        // stream.end();
         // we tell the client to execute 'updatechat' with 2 parameters
         if (socket.room == "room1") {
-            streamRoom1.write("<div data-id=" + data + " class=Deleted" + " data-Time=" + time().toString() + "></div>\n");
+            streamRoom1.write("<div data-id=" + data + " class=Deleted" + " data-Time=" + d.getTime() + "></div>\n");
         }
         else {
-            streamRoom2.write("<div data-id=" + data + " class=Deleted" + " data-Time=" + time().toString() + "></div>\n");
+            streamRoom2.write("<div data-id=" + data + " class=Deleted" + " data-Time=" + d.getTime() + "></div>\n");
         }
         io.sockets. in (socket.room).emit('updateDelete', socket.username, data, test, id++);
     });
