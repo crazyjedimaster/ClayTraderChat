@@ -1,3 +1,4 @@
+
 var app = require('express').createServer();
 var io = require('socket.io').listen(app);
 var fs = require('fs');
@@ -129,13 +130,13 @@ io.sockets.on('connection', function (socket) {
 
         if (socket.room == "room1") {
             mesHisRoom1.shift();
-            mesHisRoom1.push(mUserID + ';<div class="chat" id = ' + id + '>;<b>' + socket.username + ':</b> ' + data + '  </div>');
-            streamRoom1.write("<div id=" + id + " class=Message>" + socket.username + ":" + data + " @ " + time().toString() + "</div>\n");
+            mesHisRoom1.push(mUserID + ';' + toSend);
+            streamRoom1.write(toSend);
         }
         else {
             mesHisRoom2.shift();
-            mesHisRoom2.push(mUserID + ';<div class="chat" id = ' + id + '>;<b>' + socket.username + ':</b> ' + data + '  </div>');
-            streamRoom2.write("<div id=" + id + " class=Message>" + socket.username + ":" + data + " @ " + time().toString() + "</div>\n");
+            mesHisRoom2.push(mUserID + ';' + toSend); //<div class="chat" id = ' + id + '>;<b>' + socket.username + ':</b> ' + data + '  </div>');
+            streamRoom2.write(toSend);//"<div id=" + id + " class=Message>" + socket.username + ":" + data + " @ " + time().toString() + "</div>\n");
         }
         io.sockets. in (socket.room).emit('updatechat', socket.username, toSend, id++, mUserID);
 
