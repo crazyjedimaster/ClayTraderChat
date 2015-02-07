@@ -52,7 +52,6 @@
     Socket.on('updatechat', function (username, data, id, mUserID) {
 
         var data = Autolinker.link(data);
-        alert(data);
         if (username != "SERVER") {
             $('#conversation').append(data);
         }
