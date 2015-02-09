@@ -56,7 +56,7 @@
             $('#conversation').append(data);
         }
         if (role == 1 && username != "SERVER") {
-            $('#conversation').append('<div class="admin"> <input type="button" class =  d' + id + ' onclick="myFunction(' + id + ')"value="delete" /> <input type="button" class =  d' + id + ' onclick=banUser("' + username + '") value="Ban" /> </div>');
+            $('#conversation').append('<div class="admin"> <input type="button" class =  d' + id + ' onclick="myFunction(' + id + ')"value="delete" /> <input type="button" class =  d' + id + ' onclick=banUser("' + username + '") value="ban" /> </div>');
         }
         var mute = document.getElementById('mute');
         if (!mute.checked) {
@@ -204,7 +204,7 @@
     <div id="convPane">
 	    <div id="conversation"></div>
     </div>
-    <textarea id="data"></textarea>
+    <textarea id="data">Test</textarea>
     <input type="button" id="datasend" value="send" />
     <label for="mute">Turn Off Sound - </label>
     <input type="checkbox" name="mute" id="mute" value="mute" >
