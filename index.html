@@ -188,7 +188,34 @@
         return hold.toString();
     }
 </script>
-
+<script>
+    //Store the mute in cookie
+    function mute() {
+        //get current cookies
+        var cookie = document.cookie.split(';');
+        //cookie name
+        var name = "muted=";
+        //loop through cookies
+        for (var i = 0; i < cookie.length + 1; i++) {
+            var c = cookie[i];
+            //remove leading spaces
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            //check for cookie name and get value
+            if (c.indexOf(name) == 0) {
+                var value = c.substring(name.length, c.length);
+                //flip value
+                if (value == 'true') {
+                    document.cookie = name + "false;";
+                }
+                else {
+                    document.cookie = name + "true;";
+                }
+            }
+        }
+    }
+</script>
 
 
 
@@ -207,7 +234,7 @@
     <textarea id="data" placeholder="***READ*** By participating in this chat room, you acknowledge that you have read, understand and agree to follow the rules." ></textarea>
     <input type="button" id="datasend" value="send" />
     <label for="mute">Turn Off Sound - </label>
-    <input type="checkbox" name="mute" id="mute" value="mute" >
+    <input type="checkbox" name="mute" id="mute" value="mute" onclick="mute()">
 </div>
 <div id="history">
     <div id="convPane">
@@ -217,7 +244,35 @@
 </body>
 </html>
 <script>
-var target = document.getElementById('chat');
-var spinner = new Spinner().spin();
-target.appendChild(spinner.el);
+    //get cookies
+    var cookie = document.cookie.split(';');
+    //name of cookie of interest
+    var name = "muted=";
+    //Mute checkbox
+    var muteBox = document.getElementById('mute');
+
+    //loop through cookies
+    for (var i = 0; i < cookie.length + 1; i++) {
+        var c = cookie[i];
+        //remove leading whitespace 
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        //get cookie of interest
+        if (c.indexOf(name) == 0) {
+            //get cookie value
+            var value = c.substring(name.length, c.length);
+            //set checkbox value
+            if (value == 'true') {
+                muteBox.checked = true;
+            }
+            else {
+                muteBox.checked = false;
+            }
+        }
+    }
+
+    var target = document.getElementById('chat');
+    var spinner = new Spinner().spin();
+    target.appendChild(spinner.el);
 </script>
