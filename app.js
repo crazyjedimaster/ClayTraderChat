@@ -11,7 +11,7 @@ var mesHisRoom2 = ["","","","","","","","","",""];
 var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Decr" ];
 var MS_PER_HOUR = 3600000;
-var TIME_OFFSET = 0;
+var TIME_OFFSET = 5;
 
 var streamOptions = { flags: 'a+'};
 var fileNameRoom1 = "Room1_" + date() +".txt"
@@ -43,7 +43,7 @@ function time() {
     var d = new Date(now - (TIME_OFFSET * MS_PER_HOUR));
 
 
-    var hours = d.getHours();// % 12;
+    var hours = d.getHours() % 12;
     if (hours < 10) 
     {
         hours = "0" + hours;
