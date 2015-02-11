@@ -196,7 +196,7 @@
         //cookie name
         var name = "muted=";
         //loop through cookies
-        for (var i = 0; i < cookie.length + 1; i++) {
+        for (var i = 0; i < cookie.length; i++) {
             var c = cookie[i];
             //remove leading spaces
             while (c.charAt(0) == ' ') {
@@ -212,6 +212,9 @@
                 else {
                     document.cookie = name + "true;";
                 }
+            }
+            else {
+                document.cookie = name + "true;";
             }
         }
     }
@@ -252,7 +255,7 @@
     var muteBox = document.getElementById('mute');
 
     //loop through cookies
-    for (var i = 0; i < cookie.length + 1; i++) {
+    for (var i = 0; i < cookie.length; i++) {
         var c = cookie[i];
         //remove leading whitespace 
         while (c.charAt(0) == ' ') {
