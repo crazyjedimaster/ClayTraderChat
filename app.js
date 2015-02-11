@@ -11,7 +11,7 @@ var mesHisRoom2 = ["","","","","","","","","",""];
 var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Decr" ];
 var MS_PER_HOUR = 3600000;
-var TIME_OFFSET = -2;
+var TIME_OFFSET = 0;
 
 var streamOptions = { flags: 'a+'};
 var fileNameRoom1 = "Room1_" + date() +".txt"
@@ -22,7 +22,7 @@ var streamRoom2 = fs.createWriteStream(fileNameRoom2,streamOptions);
 
 function date() {
     var now = new Date();
-    var d = new Date(now - (TIME_OFFSET * MS_PER_HOUR));
+    var d = new Date(now);
 
     var year = d.getFullYear();
     var month = d.getMonth() + 1;
