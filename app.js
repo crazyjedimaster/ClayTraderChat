@@ -22,7 +22,7 @@ var streamRoom2 = fs.createWriteStream(fileNameRoom2,streamOptions);
 
 function date() {
     var now = new Date();
-    var d = new Date(now);
+    var d = new Date(now - (TIME_OFFSET * MS_PER_HOUR));
 
     var year = d.getFullYear();
     var month = d.getMonth() + 1;
@@ -43,7 +43,7 @@ function time() {
     var d = new Date(now - (TIME_OFFSET * MS_PER_HOUR));
 
 
-    var hours = (d.getHours() - 6) % 12;
+    var hours = d.getHours();// % 12;
     if (hours < 10) 
     {
         hours = "0" + hours;
