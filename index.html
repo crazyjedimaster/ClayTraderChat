@@ -191,13 +191,9 @@
 <script>
     //Store the mute in cookie
     function mute() {
-        alert("here");
         var cookie = document.cookie.split(';');
         var name = "muted=";
-
-        alert("here");
         var muteBox = document.getElementById('mute');
-        alert(muteBox.checked);
         document.cookie = name + muteBox.checked + ";";
     }
 </script>
@@ -235,7 +231,7 @@
     var name = "muted=";
     //Mute checkbox
     var muteBox = document.getElementById('mute');
-
+    alert(cookie);
     //loop through cookies
     for (var i = 0; i < cookie.length; i++) {
         var c = cookie[i];
@@ -243,11 +239,13 @@
         while (c.charAt(0) == ' ') {
             c = c.substring(1);
         }
+        alert(c);
         //get cookie of interest
         if (c.indexOf(name) == 0) {
             //get cookie value
             var value = c.substring(name.length, c.length);
             //set checkbox value
+            alert(value);
             if (value == 'true') {
                 muteBox.checked = true;
             }
