@@ -191,32 +191,14 @@
 <script>
     //Store the mute in cookie
     function mute() {
-        //get current cookies
+        alert("here");
         var cookie = document.cookie.split(';');
-        //cookie name
         var name = "muted=";
-        //loop through cookies
-        for (var i = 0; i < cookie.length; i++) {
-            var c = cookie[i];
-            //remove leading spaces
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            //check for cookie name and get value
-            if (c.indexOf(name) == 0) {
-                var value = c.substring(name.length, c.length);
-                //flip value
-                if (value == 'true') {
-                    document.cookie = name + "false;";
-                }
-                else {
-                    document.cookie = name + "true;";
-                }
-            }
-            else {
-                document.cookie = name + "true;";
-            }
-        }
+
+        alert("here");
+        var muteBox = document.getElementById('mute');
+        alert(muteBox.checked);
+        document.cookie = name + muteBox.checked + ";";
     }
 </script>
 
