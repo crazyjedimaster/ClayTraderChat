@@ -215,7 +215,7 @@
 	    <div id="conversation"></div>
     </div>
     <textarea name="text_entry" id="data" placeholder="***READ*** By participating in this chat room, you acknowledge that you have read, understand and agree to follow the rules." ></textarea>
-    <input type="button" id="datasend" value="send" onSubmit="text_entry.value='';" />
+    <input type="button" id="datasend" value="send" onSubmit="document.text_entry.value='';" />
     <label for="mute">Turn Off Sound - </label>
     <input type="checkbox" name="mute" id="mute" value="mute" onclick="mute()">
 </div>
