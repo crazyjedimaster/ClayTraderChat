@@ -58,7 +58,7 @@
             $('#conversation').append(data);
         }
         if (role == 1 && username != "SERVER") {
-            $('#conversation').append('<div class="admin"> <input type="button" class =  d' + id + ' onclick="myFunction(' + id + ')"value="delete" /> <input type="button" class =  d' + id + ' onclick=banUser("' + username + '") value="ban" /> </div>');
+            $('#conversation').append('<div class="admin"> <input type="button" class =  d' + id + ' onclick="myFunction(' + id + ')"value="X" /> <input type="button" class =  d' + id + ' onclick=banUser("' + username + '") value="ban" /> </div>');
         }
         var mute = document.getElementById('mute');
         if (!mute.checked) {
