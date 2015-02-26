@@ -8,7 +8,7 @@
   },
   "subdomain": "claytrader",
   "scripts": {
-    "start": "node app.js"
+    "start": "node server.js"
   },
   "engines": {
     "node": "0.10.X"
