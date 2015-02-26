@@ -118,7 +118,7 @@ io.sockets.on('connection', function (socket) {
 
     // when the client emits 'sendchat', this listens and executes
     socket.on('sendchat', function (data, mUserID, avatar) {
-        var toSend = '<div class="chat group" id = ' + id + '>' + '<div class="avatar"><a target="_blank" href="http://claytrader.com/users/' + socket.username + '">' + avatar + '</div>' + '<div class="content"><div class="user"><a target="_blank" href="http://claytrader.com/users/' + socket.username + '">' + socket.username + '</a></div><div class="time">' + shortDate().toString() + ' ' + time().toString() + '</div><div class="message">' + data + '</div> </div> </div>';  
+        var toSend = '<div class="chat group" id = ' + id + '>' + '<div class="avatar"><a target="_blank" href="http://claytrader.com/users/' + socket.username + '">' + avatar + '</div>' + '<div class="content"><div class="chat_info"><div class="user"><a target="_blank" href="http://claytrader.com/users/' + socket.username + '">' + socket.username + '</a></div><div class="time">' + shortDate().toString() + ' ' + time().toString() + '</div></div><div class="message">' + data + '</div> </div> </div>';  
         if (today != date()) {
             fileNameRoom1 = "Room1_" + date() + ".txt";
             fileNameRoom2 = "Room2_" + date() + ".txt";
