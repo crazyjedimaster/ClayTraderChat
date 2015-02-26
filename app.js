@@ -7,7 +7,7 @@ app.listen(8080);
 //var d = new Date();
 var today = date();
 var mesHisRoom1 = ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""];
-var mesHisRoom2 = ["","","","","","","","","",""];
+var mesHisRoom2 = ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""];
 var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Decr" ];
 var MS_PER_HOUR = 3600000;
@@ -118,7 +118,7 @@ io.sockets.on('connection', function (socket) {
 
     // when the client emits 'sendchat', this listens and executes
     socket.on('sendchat', function (data, mUserID, avatar) {
-        var toSend = '<div class="chat group" id = ' + id + '>' + '<div class="avatar">' + avatar + '</div>' + '<div class="content"><div class="user">' + socket.username + '</div><div class="time">' + shortDate().toString() + ' ' + time().toString() + '</div><div class="message">' + data + '</div> </div> </div>';  
+        var toSend = '<div class="chat group" id = ' + id + '>' + '<div class="avatar">' + avatar + '</div>' + '<div class="content"><div class="user"><a href="#">' + socket.username + '</a></div><div class="time">' + shortDate().toString() + ' ' + time().toString() + '</div><div class="message">' + data + '</div> </div> </div>';  
         if (today != date()) {
             fileNameRoom1 = "Room1_" + date() + ".txt";
             fileNameRoom2 = "Room2_" + date() + ".txt";
