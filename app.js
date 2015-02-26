@@ -6,7 +6,7 @@ var fs = require('fs');
 app.listen(8080);
 //var d = new Date();
 var today = date();
-var mesHisRoom1 = ["","","","","","","","","",""];
+var mesHisRoom1 = ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""];
 var mesHisRoom2 = ["","","","","","","","","",""];
 var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Decr" ];
