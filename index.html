@@ -20,7 +20,7 @@
     for (var i = 6; i < urlParts.length; i++) {
         avatar += '?' + urlParts[i];
     }
- 
+
     var Socket = io.connect();
     //var target = document.getElementById("chat");
     //target.appendChild(animation.el);
@@ -54,6 +54,12 @@
     Socket.on('updatechat', function (username, data, id, mUserID) {
 
         var data = Autolinker.link(data);
+
+        var elementHeight = $("#conversation")[0].scrollHeight;
+        var scrollPosition = $("#conversation").height() + $("#conversation").scrollTop();
+        var scrollTest = (elementHeight == scrollPosition);
+        alert(scrollTest);
+
         if (username != "SERVER") {
             $('#conversation').append(data);
         }
@@ -65,8 +71,11 @@
             var audio = document.getElementById('sound');
             audio.play();
         }
-        var objDiv = document.getElementById("conversation");
-        objDiv.scrollTop = objDiv.scrollHeight;
+
+        if (scrollTest) {
+            var objDiv = document.getElementById("conversation");
+            objDiv.scrollTop = objDiv.scrollHeight;
+        }
     });
 
     Socket.on('updateDelete', function (username, data, test, id) {
@@ -121,6 +130,7 @@
             $('#data').val('');
             // tell server to execute 'sendchat' and send along one parameter
             Socket.emit('sendchat', message, userID, avatar);
+            return false;
         });
         $('#datadelete').click(function () {
             var message = $('#toDelete').val();
@@ -147,8 +157,15 @@
                 $('#data').val('');
                 // tell server to execute 'sendchat' and send along one parameter
                 Socket.emit('sendchat', message, userID, avatar);
+                return false;
             }
+
         });
+
+
+        //  $('#conversation').scroll(function(event){
+        //      alert('here');
+        //  }); 
     });
 
 </script>

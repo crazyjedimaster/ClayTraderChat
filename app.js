@@ -164,7 +164,7 @@ io.sockets.on('connection', function (socket) {
         // update list of users in chat, client-side
         io.sockets.emit('updateusers', usernames);
         // echo globally that this client has left
-        socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected', 0);
+        //socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected', 0);
         socket.leave(socket.room);
         //stream.end();
     });
