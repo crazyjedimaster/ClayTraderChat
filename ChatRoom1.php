@@ -20,7 +20,7 @@
     </head>
     <body>
         <div>
-           <iframe src="http://claytrader.jit.su/?room1?<?php echo $userName; ?>?<?php echo $role?>?<?php echo $userID?>?<?php echo $avatar?>" id="chatFrame" height=700px width=700px frameborder="0" name="targetframe"></iframe>
+           <iframe src="http://myapp-claytrader.rhcloud.com/?room1?<?php echo $userName; ?>?<?php echo $role?>?<?php echo $userID?>?<?php echo $avatar?>" id="chatFrame" height=700px width=700px frameborder="0" name="targetframe"></iframe>
         </div>
     </body>
 </html>
