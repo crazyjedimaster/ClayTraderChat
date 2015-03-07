@@ -1,6 +1,6 @@
 <?php
     require_once("../../../wp-load.php");
-
+    //extra comments and stuff right heres
       $current_user = wp_get_current_user();
       $userName = $current_user->display_name;
       $userID = $current_user->ID; 
@@ -20,7 +20,7 @@
     </head>
     <body>
         <div>
-           <iframe src="http://myapp-claytrader.rhcloud.com/?room1?<?php echo $userName; ?>?<?php echo $role?>?<?php echo $userID?>?<?php echo $avatar?>" id="chatFrame" height=700px width=700px frameborder="0" name="targetframe"></iframe>
+           <iframe src="http://stevnsapp-claytrader.rhcloud.com/?room1?<?php echo $userName; ?>?<?php echo $role?>?<?php echo $userID?>?<?php echo $avatar?>" id="chatFrame" height=700px width=700px frameborder="0" name="targetframe"></iframe>
         </div>
     </body>
 </html>
