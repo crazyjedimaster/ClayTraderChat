@@ -6,12 +6,12 @@
     "express": "2.4.6",
     "socket.io": "0.8.4"
   },
-  //"subdomain": "claytrader",
+  "subdomain": "claytrader",
   "scripts": {
     "start": "node app.js"
   },
-  "main":"app.js"
-  //"engines": {
-    //"node": "0.10.X"
-  //}
+  "main":"app.js",
+  "engines": {
+    "node": "0.10.X"
+  }
 }
