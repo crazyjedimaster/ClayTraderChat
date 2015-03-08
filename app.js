@@ -5,7 +5,7 @@ var app = require('express').createServer();
 var io = require('socket.io').listen(app);
 var fs = require('fs');
 
-app.listen(server_port);
+app.listen(server_port,server_ip_address);
 //var d = new Date();
 var today = date();
 var mesHisRoom1 = ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""];
