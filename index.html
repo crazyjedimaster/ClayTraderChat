@@ -53,8 +53,6 @@
     // listener, whenever the server emits 'updatechat', this updates the chat body
     Socket.on('updatechat', function (username, data, id, mUserID) {
 
-        var data = Autolinker.link(data);
-
         var elementHeight = $("#conversation")[0].scrollHeight;
         var scrollPosition = $("#conversation").height() + $("#conversation").scrollTop();
         var scrollTest = (elementHeight == scrollPosition);
@@ -110,8 +108,9 @@
         $('#datasend').click(function () {
             var message = $('#data').val();
             //strips tags
-            message = $("<div/>").html(message).text();
 
+            message = $("<div/>").html(message).text();
+            message = Autolinker.link(message);
             var mParts = message.split("[link]");
             if (mParts.length > 1) {
                 message = "";
@@ -145,6 +144,7 @@
                 var message = $('#data').val();
                 //strips tags
                 message = $("<div/>").html(message).text();
+                message = Autolinker.link(message);
                 var mParts = message.split("[link]");
                 if (mParts.length > 1) {
                     message = mParts[0];
