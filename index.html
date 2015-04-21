@@ -210,8 +210,11 @@
 <script>
     //Store the mute in cookie
     function mute() {
+        var urlParts = url.split("?")
+        var room = urlParts[1];
+
         var cookie = document.cookie.split(';');
-        var name = "muted=";
+        var name = room + "muted=";
         var muteBox = document.getElementById('mute');
         document.cookie = name + muteBox.checked + ";";
     }
@@ -244,10 +247,13 @@
 </body>
 </html>
 <script>
+    //get room
+    var urlParts = url.split("?")
+    var room = urlParts[1];
     //get cookies
     var cookie = document.cookie.split(';');
     //name of cookie of interest
-    var name = "muted=";
+    var name = room + "muted=";
     //Mute checkbox
     var muteBox = document.getElementById('mute');
     //alert(cookie);
