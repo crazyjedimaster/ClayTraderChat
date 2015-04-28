@@ -16,7 +16,7 @@
     var avatar = urlParts[5];
     var muted = false;
     var animation = new Spinner().spin();
-
+	
     for (var i = 6; i < urlParts.length; i++) {
         avatar += '?' + urlParts[i];
     }
@@ -35,6 +35,9 @@
             document.getElementById("history").style.display = 'none';
             Socket.emit('adduser', userName, room);
         }
+
+	//add this for a test can be removed latter (
+	alert('Hi Nate');
     });
 
     // listener, whenever the server emits 'updatechat', this updates the chat body
