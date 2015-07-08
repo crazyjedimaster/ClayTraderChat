@@ -152,13 +152,13 @@
                 var messageArray = input.split(/(<img.*>)/g);
 
                 for (var i = 0; i < messageArray.length; i++) {
-                    alert(message);
+                    //alert(message);
                     if (i % 2 == 0) {
                         messageArray[i] = $("<div/>").html(messageArray[i]).text();
                         message += Autolinker.link(messageArray[i]);
                     }
                     else {
-                        alert(messageArray[i]);
+                        //alert(messageArray[i]);
                         message += messageArray[i];
                     }
                     
