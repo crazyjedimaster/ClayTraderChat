@@ -52,7 +52,6 @@
 
     // listener, whenever the server emits 'updatechat', this updates the chat body
     Socket.on('updatechat', function (username, data, id, mUserID) {
-
         var elementHeight = $("#conversation")[0].scrollHeight;
         var scrollPosition = $("#conversation").height() + $("#conversation").scrollTop();
         var scrollTest = (elementHeight == scrollPosition);
@@ -74,12 +73,6 @@
             var objDiv = document.getElementById("conversation");
             objDiv.scrollTop = objDiv.scrollHeight;
         }
-
-        //change the title bar
-        if (!parent.document.hasFocus()) {
-            parent.document.title = 'New Message';
-        }
-
     });
 
     Socket.on('updateDelete', function (username, data, test, id) {
@@ -311,13 +304,13 @@
     $(document).ready(function () {
         $(window).focus(function () {
             if (room == 'room1') {
-                parent.document.title = 'Stocks Under $1 - New';
+                parent.document.title = 'Stocks Under $1';
             }
             else if (room == 'room2') {
-                parent.document.title = 'Stocks Over $1 - New';
+                parent.document.title = 'Stocks Over $1';
             }
             else if (room == 'room3') {
-                parent.document.title = 'Traders Lounge - New';
+                parent.document.title = 'Traders Loung';
             }
         });
     });
