@@ -76,7 +76,7 @@
         }
 
         //change the title bar
-        if (parent.document.hasFocus()) {
+        if (!parent.document.hasFocus()) {
             parent.document.title = 'New Message';
         }
 
@@ -158,10 +158,13 @@
                         message += Autolinker.link(messageArray[i]);
                     }
                     else {
-                        //alert(messageArray[i]);
-                        message += messageArray[i];
+                        var sourceStart = messageArray[i].split('src=');
+                        var sourceEnd = sourceStart[1].split('>');
+                        message += '<a href=' + sourceEnd[0] + ' target="_blank">' + messageArray[i] + '</a>';
+                        // alert(sourceStart + '|' + sourceEnd);
+                        // alert(messageArray[i].substring(sourceStart,sourceEnd));
                     }
-                    
+
                 }
 
                 $('#data').val('');
@@ -308,13 +311,13 @@
     $(document).ready(function () {
         $(window).focus(function () {
             if (room == 'room1') {
-                parent.document.title = 'Stocks Under $1';
+                parent.document.title = 'Stocks Under $1 - New';
             }
             else if (room == 'room2') {
-                parent.document.title = 'Stocks Over $1';
+                parent.document.title = 'Stocks Over $1 - New';
             }
             else if (room == 'room3') {
-                parent.document.title = 'Traders Loung';
+                parent.document.title = 'Traders Lounge - New';
             }
         });
     });

@@ -46,7 +46,7 @@ var mesHisRoom2 = ["","","","","","","","","","","","","","","","","","","","","
 var mesHisRoom3 = ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""];
 
 var MS_PER_HOUR = 3600000;
-var TIME_OFFSET = 5;
+var TIME_OFFSET = 0;
 
 var streamOptions = { flags: 'a+'};
 var fileNameRoom1 = "Room1_" + date() + ".txt";
@@ -55,8 +55,6 @@ var fileNameRoom3 = "Room3_" + date() + ".txt";
 var streamRoom1 = fs.createWriteStream(fileNameRoom1,streamOptions);
 var streamRoom2 = fs.createWriteStream(fileNameRoom2,streamOptions);
 var streamRoom3 = fs.createWriteStream(fileNameRoom3,streamOptions);
-
-
 
 function date() {
     var now = new Date();
