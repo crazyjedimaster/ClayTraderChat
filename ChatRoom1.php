@@ -7,6 +7,13 @@
       $role = current_user_can("delete_posts")== 1? 1 : 0; 
       $avatar = get_avatar($userID,24);
       $row = $wpdb->get_row("SELECT * FROM user_chat_ban WHERE userName = "+ $userName, ARRAY_N);     
+      //if( edd_has_user_purchased($user_id, $download_id) && $user_id != "0" ) {
+      //  $classAddition = '<mark>- TCU </mark>'
+      //}
+      //else{
+      //    $classAddition = ''
+      //}
+      //$userName = $userName . $classAddition
 
 ?>
 
@@ -20,10 +27,16 @@
     </head>
     <body>
         <div>
-           <iframe src="http://stevnsapp-claytrader.rhcloud.com/?room1?<?php echo $userName; ?>?<?php echo $role?>?<?php echo $userID?>?<?php echo $avatar?>" id="chatFrame" height=700px width=700px frameborder="0" name="targetframe"></iframe>
+           <iframe onfocus="focus()" src="http://stevnsapp-claytrader.rhcloud.com/?room1?<?php echo $userName; ?>?<?php echo $role?>?<?php echo $userID?>?<?php echo $avatar?>" id="chatFrame" height=700px width=700px frameborder="0" name="targetframe"></iframe>
         </div>
     </body>
 </html>
+<script>
+    //Store the mute in cookie
+    function focus() {
+        document.title = 'plakdfj';
+    }
+</script>
 <?php } ?>
 
 

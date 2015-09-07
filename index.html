@@ -17,6 +17,7 @@
     var muted = false;
     var animation = new Spinner().spin();
 
+
     for (var i = 6; i < urlParts.length; i++) {
         avatar += '?' + urlParts[i];
     }
@@ -72,6 +73,13 @@
         if (scrollTest) {
             var objDiv = document.getElementById("conversation");
             objDiv.scrollTop = objDiv.scrollHeight;
+        }
+
+        if (!document.hasFocus()) {
+            if (navigator.appVersion.indexOf('Chrome') < 0 && navigator.appVersion.indexOf('Edge') < 0 && navigator.appVersion.indexOf('Safari') < 0) {
+                alert(navigator.appVersion)
+                parent.document.title = 'New Message';
+            }
         }
     });
 
