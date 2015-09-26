@@ -27,14 +27,17 @@
     </head>
     <body>
         <div>
-           <iframe onfocus="focus()" src="http://stevnsapp-claytrader.rhcloud.com/?room1?<?php echo $userName; ?>?<?php echo $role?>?<?php echo $userID?>?<?php echo $avatar?>" id="chatFrame" height=700px width=700px frameborder="0" name="targetframe"></iframe>
+           <iframe  src="http://stevnsapp-claytrader.rhcloud.com/?room1?<?php echo $userName; ?>?<?php echo $role?>?<?php echo $userID?>?<?php echo $avatar?>" id="chatFrame" height=700px width=700px frameborder="0" name="targetframe"></iframe>
         </div>
     </body>
 </html>
 <script>
-    //Store the mute in cookie
-    function focus() {
-        document.title = 'plakdfj';
+    window.addEventListener("message", receiveMessage, false);
+
+    function receiveMessage(event) {
+        var source = event.source.frameElement; //this is the iframe that sent the message
+        var message = event.data; //this is the message
+        document.title = message;
     }
 </script>
 <?php } ?>
