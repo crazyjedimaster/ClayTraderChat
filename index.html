@@ -38,7 +38,6 @@
 
     // listener, whenever the server emits 'updatechat', this updates the chat body
     Socket.on('updatechatIntro', function (id, history) {
-                        alert(userName +':'+ role +':'+ userID +':'+ avatar  +':'+ room)
         var target = document.getElementById('chat');
         var child = target.lastChild;
         target.removeChild(child);
