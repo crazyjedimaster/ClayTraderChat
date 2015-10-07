@@ -61,7 +61,7 @@
         }
         if (role == 1 && username != "SERVER") {
             $('#conversation').append('<div class="admin"> <input type="button" class =  d' + id + ' onclick="myFunction(' + id + ')"value="X" /> <input type="button" class =  d' + id + ' onclick=banUser("' + username + '") value="ban" /> </div>');
-        }
+       }
         var mute = document.getElementById('mute');
         if (!mute.checked) {
             var audio = document.getElementById('sound');
@@ -74,7 +74,7 @@
 
         if (!document.hasFocus()) {
             var message='New Message'; //could be of any type, string, number, array, object, have fun
-            setTimeout(window.parent.postMessage(message,'*'),100); //the '*' has to do with cross-domain messaging. leave it like it is for same-domain messaging.
+            window.parent.postMessage(message,'*'); //the '*' has to do with cross-domain messaging. leave it like it is for same-domain messaging.
             //if (navigator.appVersion.indexOf('Chrome') < 0 && navigator.appVersion.indexOf('Edge') < 0 && navigator.appVersion.indexOf('Safari') < 0) {
               //  parent.document.title = "New Message";
             //}

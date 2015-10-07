@@ -35,7 +35,6 @@
     window.addEventListener("message", receiveMessage, false);
 
     function receiveMessage(event) {
-        var source = event.source.frameElement; //this is the iframe that sent the message
         var message = event.data; //this is the message
         document.title = message;
     }
